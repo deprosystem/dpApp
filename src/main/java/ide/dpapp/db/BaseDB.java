@@ -248,6 +248,7 @@ public class BaseDB {
         try {
             writer = new BufferedWriter(new OutputStreamWriter( new FileOutputStream(pathOut), "UTF8"));
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
+            System.out.println("copyTableInCSV error=" + ex);
             Logger.getLogger(BaseDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         

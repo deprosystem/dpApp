@@ -112,6 +112,7 @@ public class WorkingWithTables extends BaseServlet {
                     schema = request.getHeader("schemDB");
                     table = request.getParameter("name_table");
                     String appPath = ds.patchOutsideProject;
+                    formDir(appPath + "export");
                     String result = tableDb.copyTableInCSV("SELECT * FROM " + schema + "." + table, appPath + "export/" + table + ".csv");
                     if (result.length() == 0) {
                         sendResult(response, "download/get_csv/" + table);

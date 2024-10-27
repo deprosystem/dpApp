@@ -79,7 +79,8 @@ public class Querys extends BaseServlet {
                             + "._querys_meta WHERE id_query>3";
                     resG = queryDB.getQueryList(sqlG);
                     if (resG.indexOf("error") == 0) {
-                        sendError(response, resG);
+                        sendResult(response, "[]");
+//                        sendError(response, resG);
                     } else {
                         sendResult(response, resG);
                     }
@@ -288,6 +289,7 @@ public class Querys extends BaseServlet {
                                     if (ord != null && ord.length() > 0) {
                                         sql += " ORDER BY " + ord;
                                     }
+System.out.println("SQL="+sql);
                                     String resMob = queryDB.getQueryList(sql);
                                     if (resMob.indexOf("error") == 0) {
                                         sendError(response, resMob);

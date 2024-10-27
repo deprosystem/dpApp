@@ -11,6 +11,7 @@ import ide.dpapp.json_simple.JsonSimple;
 import ide.dpapp.json_simple.JsonSyntaxException;
 import ide.dpapp.json_simple.Record;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import java.io.InputStream;
 
 
 @WebServlet(name = "Autch", urlPatterns = {"/autch/*"})
+@MultipartConfig
 public class Autch extends BaseServlet {
 
     @Override
@@ -210,17 +212,17 @@ public class Autch extends BaseServlet {
                 if (ds.userId == -1) {
                     sendError(response, resEx.err_2);
                 }
-                if (request.getContentType() != null && 
-                    request.getContentType().toLowerCase().indexOf("multipart") > -1 ) {
+                String contType = request.getContentType();
+                if (contType != null && contType.toLowerCase().indexOf("multipart") > -1 ) {
                     data = request.getParameter("data");
                 } else {
                     try {
                         data = getStringRequest(request);
                     } catch (IOException e) {
-                        sendError(response, ERR.INS_ERR + e.toString());
+                        sendError(response, "111 "+ERR.INS_ERR + e.toString());
                     }
                 }
-                if (data.length() > 2) {
+                if (data != null && data.length() > 2) {
                     String appPath = ds.patchOutsideProject;
                     if (appPath.indexOf(File.separator) == 0) {
                         appPath = "/usr/local/";
@@ -279,7 +281,7 @@ public class Autch extends BaseServlet {
                                 }
                             }
                         } catch (IOException | ServletException ex) {
-                            sendError(response, ERR.INS_ERR + ex);
+                            sendError(response, "2222 "+ERR.INS_ERR + ex);
                         }
                     }
 
@@ -310,7 +312,7 @@ public class Autch extends BaseServlet {
                         }
                     }
                 } else {
-                    sendError(response, ERR.INS_ERR + " No data to edit profile");
+                    sendError(response, "333 "+ERR.INS_ERR + " No data to edit profile");
                 }
                 break;
         }
